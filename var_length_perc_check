@@ -1,0 +1,37 @@
+/* Based on a question from management, this program was developed to examine variable 
+length percentiles for all observations within a file. The program only applies to character 
+variables since numeric variables have the same length. */
+
+libname prod "\\location";
+
+/* CDS * /
+data test_cds;
+	set prod.cds_20190621;
+run;
+
+data interim_file;
+	set test_cds;
+	array chars _character_; 
+	length _varname $32;
+	do over chars;
+		__varname=vname(chars);
+		__length=lengthn(chars); 
+		output;
+	end;
+run;
+
+proc sql;
+	create table interim_file2 as
+	select __varname as varname, __length
+	from interim_file
+	group by varname;
+quit;
+
+proc summary data=interim_file2;
+	by varname;
+	var _length;
+	output out=output_file p50= p90= p95= p99= max= /autoname;
+run;
+
+proc print;
+run;

@@ -43,13 +43,13 @@ run;
 proc means data=temp contents_all noprint;
 	by name;
 	var LENGTH;
-	output out=len_check mean=aveL min=miL max=maL;
+	output out=len_check mean=aveL min=minL max=maxL;
 run;
 
 proc means data=temp_contents_all noprint;
 	by name;
 	var TYPE;
-	output out=type_check min=miL max=maL;
+	output out=type_check min=minT max=maxT;
 run;
 
 data all_check;

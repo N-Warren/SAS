@@ -1,7 +1,7 @@
 /* Based on a question from managmement, this program was written to provide a data quality check by examining 
 variable length and type for weekly data over several months. */
 
-libname Report "\\data_location" ;
+libname Report "\\data_location";
 
 %macro loop;
 
